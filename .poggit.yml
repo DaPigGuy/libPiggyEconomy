@@ -3,7 +3,6 @@ branches:
 - master
 projects:
   libPiggyEconomy:
-    path: ""
     model: virion
     type: library
 ...
