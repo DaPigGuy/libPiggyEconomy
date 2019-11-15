@@ -19,6 +19,15 @@ libPiggyEconomy::getProvider($providerInformation)
 ```
 Provider information is an array with the keys ```provider``` and ```multieconomy-currency```. The latter is optional and used only for MultiEconomy.
 
+#### Economy Provider Methods
+|Method|Description|
+---|---
+|```EconomyProvider::getMonetaryUnit(): string```|Returns symbol of currency|
+|```EconomyProvider::getMoney(Player $player): void```|Get balance of a player|
+|```EconomyProvider::giveMoney(Player $player, int $amount): void```|Give money to a player|
+|```EconomyProvider::takeMoney(Player $player, int $amount): void```|Take money from a player|
+|```EconomyProvider::setMoney(Player $player, int $amount): void```|Set balance of a player|
+
 ### Error Handling
 
 There are several exceptions that can be thrown that you may want to handle in your plugin:
