@@ -23,7 +23,7 @@ Provider information is an array with the keys ```provider``` and ```multieconom
 |Method|Description|
 ---|---
 |```EconomyProvider::getMonetaryUnit(): string```|Returns symbol of currency|
-|```EconomyProvider::getMoney(Player $player): int```|Get balance of a player|
+|```EconomyProvider::getMoney(Player $player): float```|Get balance of a player|
 |```EconomyProvider::giveMoney(Player $player, int $amount): void```|Give money to a player|
 |```EconomyProvider::takeMoney(Player $player, int $amount): void```|Take money from a player|
 |```EconomyProvider::setMoney(Player $player, int $amount): void```|Set balance of a player|
