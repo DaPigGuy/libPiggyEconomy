@@ -38,7 +38,7 @@ class MultiEconomyProvider extends EconomyProvider
     {
         /** @var MultiEconomy $multiEconomy */
         $this->multiEconomy = Server::getInstance()->getPluginManager()->getPlugin("MultiEconomy");
-        $this->currency = $this->multiEconomy->getAPI()->getCurrencies()[strtolower($providerInformation["multieconomy-currency"])] ?? null;
+        $this->currency = $this->multiEconomy->getCurrencies()[strtolower($providerInformation["multieconomy-currency"])] ?? null;
         if ($this->currency === null) {
             throw new UnknownMultiEconomyCurrencyException("MultiEconomy currency " . $providerInformation["multieconomy-currency"] . " not found.");
         }
@@ -54,11 +54,11 @@ class MultiEconomyProvider extends EconomyProvider
 
     /**
      * @param Player $player
-     * @return int
+     * @return float
      */
-    public function getMoney(Player $player): int
+    public function getMoney(Player $player): float
     {
-        return $this->multiEconomy->getAPI()->getBalance($player->getName(), $this->currency->getLowerName()) ?? $this->currency->getStartingAmount();
+        return $this->currency->getBalance($player->getName()) ?? $this->currency->getStartingAmount();
     }
 
     /**
@@ -67,7 +67,7 @@ class MultiEconomyProvider extends EconomyProvider
      */
     public function giveMoney(Player $player, int $amount): void
     {
-        $this->multiEconomy->getAPI()->addToBalance($player->getName(), $this->currency->getLowerName(), $amount);
+        $this->currency->addToBalance($player->getName(), $amount);
     }
 
     /**
@@ -76,7 +76,7 @@ class MultiEconomyProvider extends EconomyProvider
      */
     public function takeMoney(Player $player, int $amount): void
     {
-        $this->multiEconomy->getAPI()->takeFromBalance($player->getName(), $this->currency->getLowerName(), $amount);
+        $this->currency->removeFromBalance($player->getName(), $amount);
     }
 
     /**
@@ -85,6 +85,6 @@ class MultiEconomyProvider extends EconomyProvider
      */
     public function setMoney(Player $player, int $amount): void
     {
-        $this->multiEconomy->getAPI()->setBalance($player->getName(), $this->currency->getLowerName(), $amount);
+        $this->currency->setBalance($player->getName(), $amount);
     }
 }

@@ -22,11 +22,11 @@ class XPProvider extends EconomyProvider
 
     /**
      * @param Player $player
-     * @return int
+     * @return float
      */
-    public function getMoney(Player $player): int
+    public function getMoney(Player $player): float
     {
-        return $player->getXpLevel();
+        return (float) $player->getXpLevel();
     }
 
     /**

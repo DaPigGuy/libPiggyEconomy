@@ -30,9 +30,9 @@ abstract class EconomyProvider
 
     /**
      * @param Player $player
-     * @return int
+     * @return float
      */
-    abstract function getMoney(Player $player): int;
+    abstract function getMoney(Player $player): float;
 
     /**
      * @param Player $player

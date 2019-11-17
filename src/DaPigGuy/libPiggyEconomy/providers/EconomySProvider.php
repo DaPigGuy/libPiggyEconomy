@@ -40,11 +40,11 @@ class EconomySProvider extends EconomyProvider
 
     /**
      * @param Player $player
-     * @return int
+     * @return float
      */
-    public function getMoney(Player $player): int
+    public function getMoney(Player $player): float
     {
-        return (int)$this->economyAPI->myMoney($player);
+        return $this->economyAPI->myMoney($player);
     }
 
     /**
