@@ -48,11 +48,11 @@ class libPiggyEconomy
 
     /**
      * @param array $providerInformation
-     * @return EconomyProvider|null
+     * @return EconomyProvider
      * @throws UnknownProviderException
      * @throws MissingProviderDependencyException
      */
-    public static function getProvider(array $providerInformation): ?EconomyProvider
+    public static function getProvider(array $providerInformation): EconomyProvider
     {
         if (!isset(self::$economyProviders[strtolower($providerInformation["provider"])])) throw new UnknownProviderException("Provider " . $providerInformation["provider"] . " not found.");
         $provider = self::$economyProviders[strtolower($providerInformation["provider"])];
