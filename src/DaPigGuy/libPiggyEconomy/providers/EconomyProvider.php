@@ -12,43 +12,21 @@ use pocketmine\Player;
  */
 abstract class EconomyProvider
 {
-    /**
-     * @return bool
-     */
     public static function checkDependencies(): bool
     {
         return true;
     }
 
-    /**
-     * @return string
-     */
     public function getMonetaryUnit(): string
     {
         return "$";
     }
 
-    /**
-     * @param Player $player
-     * @return float
-     */
     abstract function getMoney(Player $player): float;
 
-    /**
-     * @param Player $player
-     * @param int $amount
-     */
     abstract function giveMoney(Player $player, int $amount): void;
 
-    /**
-     * @param Player $player
-     * @param int $amount
-     */
     abstract function takeMoney(Player $player, int $amount): void;
 
-    /**
-     * @param Player $player
-     * @param int $amount
-     */
     abstract function setMoney(Player $player, int $amount): void;
 }

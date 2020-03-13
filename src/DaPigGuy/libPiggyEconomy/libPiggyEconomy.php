@@ -11,10 +11,6 @@ use DaPigGuy\libPiggyEconomy\providers\EconomySProvider;
 use DaPigGuy\libPiggyEconomy\providers\MultiEconomyProvider;
 use DaPigGuy\libPiggyEconomy\providers\XPProvider;
 
-/**
- * Class libPiggyEconomy
- * @package DaPigGuy\libPiggyEconomy
- */
 class libPiggyEconomy
 {
     /** @var bool */
@@ -34,10 +30,6 @@ class libPiggyEconomy
         }
     }
 
-    /**
-     * @param array $providerNames
-     * @param string $economyProvider
-     */
     public static function registerProvider(array $providerNames, string $economyProvider): void
     {
         foreach ($providerNames as $providerName) {
@@ -47,8 +39,6 @@ class libPiggyEconomy
     }
 
     /**
-     * @param array $providerInformation
-     * @return EconomyProvider
      * @throws UnknownProviderException
      * @throws MissingProviderDependencyException
      */
