@@ -46,7 +46,7 @@ class libPiggyEconomy
     {
         if (!isset(self::$economyProviders[strtolower($providerInformation["provider"])])) throw new UnknownProviderException("Provider " . $providerInformation["provider"] . " not found.");
         $provider = self::$economyProviders[strtolower($providerInformation["provider"])];
-        if (!$provider::checkDependencies()) throw new MissingProviderDependencyException("Dependencies for provider " . $providerInformation . " not found.");
+        if (!$provider::checkDependencies()) throw new MissingProviderDependencyException("Dependencies for provider " . $providerInformation["provider"] . " not found.");
         $provider = new $provider($providerInformation);
         return $provider;
     }
