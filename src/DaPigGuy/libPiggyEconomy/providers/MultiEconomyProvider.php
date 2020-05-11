@@ -45,17 +45,17 @@ class MultiEconomyProvider extends EconomyProvider
         return $this->currency->getBalance($player->getName()) ?? $this->currency->getStartingAmount();
     }
 
-    public function giveMoney(Player $player, int $amount): void
+    public function giveMoney(Player $player, float $amount): void
     {
         $this->currency->addToBalance($player->getName(), $amount);
     }
 
-    public function takeMoney(Player $player, int $amount): void
+    public function takeMoney(Player $player, float $amount): void
     {
         $this->currency->removeFromBalance($player->getName(), $amount);
     }
 
-    public function setMoney(Player $player, int $amount): void
+    public function setMoney(Player $player, float $amount): void
     {
         $this->currency->setBalance($player->getName(), $amount);
     }

@@ -33,17 +33,17 @@ class EconomySProvider extends EconomyProvider
         return $this->economyAPI->myMoney($player);
     }
 
-    public function giveMoney(Player $player, int $amount): void
+    public function giveMoney(Player $player, float $amount): void
     {
         $this->economyAPI->addMoney($player, $amount);
     }
 
-    public function takeMoney(Player $player, int $amount): void
+    public function takeMoney(Player $player, float $amount): void
     {
         $this->economyAPI->reduceMoney($player, $amount);
     }
 
-    public function setMoney(Player $player, int $amount): void
+    public function setMoney(Player $player, float $amount): void
     {
         $this->economyAPI->setMoney($player, $amount);
     }

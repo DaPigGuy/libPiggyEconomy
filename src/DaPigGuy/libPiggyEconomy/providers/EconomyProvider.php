@@ -24,9 +24,9 @@ abstract class EconomyProvider
 
     abstract function getMoney(Player $player): float;
 
-    abstract function giveMoney(Player $player, int $amount): void;
+    abstract function giveMoney(Player $player, float $amount): void;
 
-    abstract function takeMoney(Player $player, int $amount): void;
+    abstract function takeMoney(Player $player, float $amount): void;
 
-    abstract function setMoney(Player $player, int $amount): void;
+    abstract function setMoney(Player $player, float $amount): void;
 }
