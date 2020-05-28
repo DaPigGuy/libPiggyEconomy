@@ -22,11 +22,31 @@ abstract class EconomyProvider
         return "$";
     }
 
-    abstract function getMoney(Player $player): float;
+	/**
+	 * $callback -> function(?float $money): void{}
+	 *
+	 * The $money will be null if player is not found.
+	 */
+    abstract function getMoney(Player $player, callable $callback): void;
 
-    abstract function giveMoney(Player $player, float $amount): void;
+	/**
+	 * $callback -> function(bool $success): void{}
+	 *
+	 * If money was given successfully then callable would contain true else false.
+	 */
+    abstract function giveMoney(Player $player, float $amount, ?callable $callback = null): void;
 
-    abstract function takeMoney(Player $player, float $amount): void;
+	/**
+	 * $callback -> function(bool $success): void{}
+	 *
+	 * If money was taken successfully then callable would contain true else false.
+	 */
+    abstract function takeMoney(Player $player, float $amount, ?callable $callback = null): void;
 
-    abstract function setMoney(Player $player, float $amount): void;
+	/**
+	 * $callback -> function(bool $success): void{}
+	 *
+	 * If money was set successfully then callable would contain true else false.
+	 */
+    abstract function setMoney(Player $player, float $amount, ?callable $callback = null): void;
 }

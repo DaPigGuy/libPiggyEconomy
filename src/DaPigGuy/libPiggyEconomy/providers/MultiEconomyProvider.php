@@ -40,23 +40,32 @@ class MultiEconomyProvider extends EconomyProvider
         return $this->currency->getSymbol();
     }
 
-    public function getMoney(Player $player): float
+    public function getMoney(Player $player, callable $callback): void
     {
-        return $this->currency->getBalance($player->getName()) ?? $this->currency->getStartingAmount();
+        $callback($this->currency->getBalance($player->getName()) ?? $this->currency->getStartingAmount());
     }
 
-    public function giveMoney(Player $player, float $amount): void
+    public function giveMoney(Player $player, float $amount, ?callable $callback = null): void
     {
-        $this->currency->addToBalance($player->getName(), $amount);
+        $ret = $this->currency->addToBalance($player->getName(), $amount);
+        if($callback !== null){
+	        $callback($ret);
+        }
     }
 
-    public function takeMoney(Player $player, float $amount): void
+    public function takeMoney(Player $player, float $amount, ?callable $callback = null): void
     {
-        $this->currency->removeFromBalance($player->getName(), $amount);
+	    $ret = $this->currency->removeFromBalance($player->getName(), $amount);
+	    if($callback !== null){
+		    $callback($ret);
+	    }
     }
 
-    public function setMoney(Player $player, float $amount): void
+    public function setMoney(Player $player, float $amount, ?callable $callback = null): void
     {
-        $this->currency->setBalance($player->getName(), $amount);
+	    $ret = $this->currency->setBalance($player->getName(), $amount);
+	    if($callback !== null){
+		    $callback($ret);
+	    }
     }
 }
