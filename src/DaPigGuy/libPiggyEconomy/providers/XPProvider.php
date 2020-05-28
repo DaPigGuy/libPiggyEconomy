@@ -25,7 +25,7 @@ class XPProvider extends EconomyProvider
         $levelsAdded = $player->addXpLevels($levels);
         $xpAdded = $player->addXp((int)(ExperienceUtils::getXpToCompleteLevel($player->getXpLevel()) * ($amount - $levels)));
         if ($callback !== null) {
-            ($levelsAdded && $xpAdded) ? $callback(true) : $callback(false);
+            $callback($levelsAdded && $xpAdded);
         }
     }
 
@@ -40,7 +40,7 @@ class XPProvider extends EconomyProvider
         $levelSet = $player->setXpLevel($levels);
         $progressSet = $player->setXpProgress($amount - $levels);
         if ($callback !== null) {
-            ($levelSet && $progressSet) ? $callback(true) : $callback(false);
+            $callback($levelSet && $progressSet);
         }
     }
 }

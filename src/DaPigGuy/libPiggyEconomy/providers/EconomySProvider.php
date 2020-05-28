@@ -31,18 +31,14 @@ class EconomySProvider extends EconomyProvider
     public function getMoney(Player $player, callable $callback): void
     {
         $money = $this->economyAPI->myMoney($player);
-        if (!$money) {
-            $callback(null);
-            return;
-        }
-        $callback($money);
+        $callback($money === false ? null : $money);
     }
 
     public function giveMoney(Player $player, float $amount, ?callable $callback = null): void
     {
         $ret = $this->economyAPI->addMoney($player, $amount);
         if ($callback !== null) {
-            ($ret === EconomyAPI::RET_SUCCESS) ? $callback(true) : $callback(false);
+            $callback($ret === EconomyAPI::RET_SUCCESS);
         }
     }
 
@@ -50,7 +46,7 @@ class EconomySProvider extends EconomyProvider
     {
         $ret = $this->economyAPI->reduceMoney($player, $amount);
         if ($callback !== null) {
-            ($ret === EconomyAPI::RET_SUCCESS) ? $callback(true) : $callback(false);
+            $callback($ret === EconomyAPI::RET_SUCCESS);
         }
     }
 
@@ -58,7 +54,7 @@ class EconomySProvider extends EconomyProvider
     {
         $ret = $this->economyAPI->setMoney($player, $amount);
         if ($callback !== null) {
-            ($ret === EconomyAPI::RET_SUCCESS) ? $callback(true) : $callback(false);
+            $callback($ret === EconomyAPI::RET_SUCCESS);
         }
     }
 }
