@@ -4,11 +4,12 @@ declare(strict_types=1);
 
 namespace DaPigGuy\libPiggyEconomy;
 
-use DaPigGuy\libPiggyEconomy\exceptions\UnknownProviderException;
 use DaPigGuy\libPiggyEconomy\exceptions\MissingProviderDependencyException;
+use DaPigGuy\libPiggyEconomy\exceptions\UnknownProviderException;
 use DaPigGuy\libPiggyEconomy\providers\EconomyProvider;
 use DaPigGuy\libPiggyEconomy\providers\EconomySProvider;
 use DaPigGuy\libPiggyEconomy\providers\MultiEconomyProvider;
+use DaPigGuy\libPiggyEconomy\providers\ParoxityEconProvider;
 use DaPigGuy\libPiggyEconomy\providers\XPProvider;
 
 class libPiggyEconomy
@@ -26,6 +27,7 @@ class libPiggyEconomy
 
             self::registerProvider(["economys", "economyapi"], EconomySProvider::class);
             self::registerProvider(["multieconomy"], MultiEconomyProvider::class);
+            self::registerProvider(["paroxityeconomy", "paroxityecon"], ParoxityEconProvider::class);
             self::registerProvider(["xp", "exp", "experience"], XPProvider::class);
         }
     }

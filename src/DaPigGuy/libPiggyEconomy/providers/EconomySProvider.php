@@ -28,23 +28,33 @@ class EconomySProvider extends EconomyProvider
         return $this->economyAPI->getMonetaryUnit();
     }
 
-    public function getMoney(Player $player): float
+    public function getMoney(Player $player, callable $callback): void
     {
-        return $this->economyAPI->myMoney($player);
+        $money = $this->economyAPI->myMoney($player);
+        $callback($money === false ? null : $money);
     }
 
-    public function giveMoney(Player $player, float $amount): void
+    public function giveMoney(Player $player, float $amount, ?callable $callback = null): void
     {
-        $this->economyAPI->addMoney($player, $amount);
+        $ret = $this->economyAPI->addMoney($player, $amount);
+        if ($callback !== null) {
+            $callback($ret === EconomyAPI::RET_SUCCESS);
+        }
     }
 
-    public function takeMoney(Player $player, float $amount): void
+    public function takeMoney(Player $player, float $amount, ?callable $callback = null): void
     {
-        $this->economyAPI->reduceMoney($player, $amount);
+        $ret = $this->economyAPI->reduceMoney($player, $amount);
+        if ($callback !== null) {
+            $callback($ret === EconomyAPI::RET_SUCCESS);
+        }
     }
 
-    public function setMoney(Player $player, float $amount): void
+    public function setMoney(Player $player, float $amount, ?callable $callback = null): void
     {
-        $this->economyAPI->setMoney($player, $amount);
+        $ret = $this->economyAPI->setMoney($player, $amount);
+        if ($callback !== null) {
+            $callback($ret === EconomyAPI::RET_SUCCESS);
+        }
     }
 }

@@ -1,6 +1,6 @@
 # libPiggyEconomy
 
-libPiggyEconomy is a virion for easy support of multiple economy providers including EconomyAPI, MultiEconomy, & PMMP's XP levels.
+libPiggyEconomy is a virion for easy support of multiple economy providers including EconomyAPI, MultiEconomy, ParoxityEconomy, & PMMP's XP levels.
 
 You may be wondering, why the absolute garbage name for a virion? Well, blame Aericio.
 
@@ -20,13 +20,13 @@ libPiggyEconomy::getProvider($providerInformation)
 Provider information is an array with the keys ```provider``` and ```multieconomy-currency```. The latter is optional and used only for MultiEconomy.
 
 #### Economy Provider Methods
-|Method|Description|
----|---
-|```EconomyProvider::getMonetaryUnit(): string```|Returns symbol of currency|
-|```EconomyProvider::getMoney(Player $player): float```|Get balance of a player|
-|```EconomyProvider::giveMoney(Player $player, int $amount): void```|Give money to a player|
-|```EconomyProvider::takeMoney(Player $player, int $amount): void```|Take money from a player|
-|```EconomyProvider::setMoney(Player $player, int $amount): void```|Set balance of a player|
+|Method|Description|Callback Signature|Callback Description|
+---|---|---|---
+|```EconomyProvider::getMonetaryUnit(): string```|Returns symbol of currency|`none`|`none`|
+|```EconomyProvider::getMoney(Player $player, callable $callback): void```|Get balance of a player|function(?float $money): void{}|Returns null if player was not found, float otherwise|
+|```EconomyProvider::giveMoney(Player $player, float $amount, ?callable $callback = null): void```|Give money to a player|function(bool $success): void{}|Returns true on success, false otherwise|
+|```EconomyProvider::takeMoney(Player $player, float $amount, ?callable $callback = null): void```|Take money from a player|function(bool $success): void{}|Returns true on success, false otherwise|
+|```EconomyProvider::setMoney(Player $player, float $amount, ?callable $callback = null): void```|Set balance of a player|function(bool $success): void{}|Returns true on success, false otherwise|
 
 ### Error Handling
 
