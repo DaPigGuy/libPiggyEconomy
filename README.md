@@ -21,7 +21,7 @@ Provider information is an array with the keys ```provider``` and ```multieconom
 
 #### Economy Provider Methods
 |Method|Description|Callback Signature|Callback Description|
----|---|---
+---|---|---|---
 |```EconomyProvider::getMonetaryUnit(): string```|Returns symbol of currency|`none`|`none`|
 |```EconomyProvider::getMoney(Player $player, callable $callback): void```|Get balance of a player|function(?float $money): void{}|Returns null if player was not found, float otherwise|
 |```EconomyProvider::giveMoney(Player $player, int $amount, ?callable $callback = null): void```|Give money to a player|function(bool $success): void{}|Returns true on success, false otherwise|
