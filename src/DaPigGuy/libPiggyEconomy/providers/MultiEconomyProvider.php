@@ -14,6 +14,7 @@ class MultiEconomyProvider extends EconomyProvider
 {
     /** @var MultiEconomy */
     private $multiEconomy;
+
     /** @var Currency */
     private $currency;
 
@@ -48,24 +49,24 @@ class MultiEconomyProvider extends EconomyProvider
     public function giveMoney(Player $player, float $amount, ?callable $callback = null): void
     {
         $ret = $this->currency->addToBalance($player->getName(), $amount);
-        if($callback !== null){
-	        $callback($ret);
+        if ($callback !== null) {
+            $callback($ret);
         }
     }
 
     public function takeMoney(Player $player, float $amount, ?callable $callback = null): void
     {
-	    $ret = $this->currency->removeFromBalance($player->getName(), $amount);
-	    if($callback !== null){
-		    $callback($ret);
-	    }
+        $ret = $this->currency->removeFromBalance($player->getName(), $amount);
+        if ($callback !== null) {
+            $callback($ret);
+        }
     }
 
     public function setMoney(Player $player, float $amount, ?callable $callback = null): void
     {
-	    $ret = $this->currency->setBalance($player->getName(), $amount);
-	    if($callback !== null){
-		    $callback($ret);
-	    }
+        $ret = $this->currency->setBalance($player->getName(), $amount);
+        if ($callback !== null) {
+            $callback($ret);
+        }
     }
 }

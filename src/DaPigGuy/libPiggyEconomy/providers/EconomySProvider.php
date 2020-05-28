@@ -30,35 +30,35 @@ class EconomySProvider extends EconomyProvider
 
     public function getMoney(Player $player, callable $callback): void
     {
-    	$money = $this->economyAPI->myMoney($player);
-    	if(!$money){
-    		$callback(null);
-    		return;
-	    }
-    	$callback($money);
+        $money = $this->economyAPI->myMoney($player);
+        if (!$money) {
+            $callback(null);
+            return;
+        }
+        $callback($money);
     }
 
     public function giveMoney(Player $player, float $amount, ?callable $callback = null): void
     {
         $ret = $this->economyAPI->addMoney($player, $amount);
-        if($callback !== null){
-	        ($ret === EconomyAPI::RET_SUCCESS) ? $callback(true) : $callback(false);
+        if ($callback !== null) {
+            ($ret === EconomyAPI::RET_SUCCESS) ? $callback(true) : $callback(false);
         }
     }
 
     public function takeMoney(Player $player, float $amount, ?callable $callback = null): void
     {
-	    $ret = $this->economyAPI->reduceMoney($player, $amount);
-	    if($callback !== null){
-		    ($ret === EconomyAPI::RET_SUCCESS) ? $callback(true) : $callback(false);
-	    }
+        $ret = $this->economyAPI->reduceMoney($player, $amount);
+        if ($callback !== null) {
+            ($ret === EconomyAPI::RET_SUCCESS) ? $callback(true) : $callback(false);
+        }
     }
 
     public function setMoney(Player $player, float $amount, ?callable $callback = null): void
     {
-	    $ret = $this->economyAPI->setMoney($player, $amount);
-	    if($callback !== null){
-		    ($ret === EconomyAPI::RET_SUCCESS) ? $callback(true) : $callback(false);
-	    }
+        $ret = $this->economyAPI->setMoney($player, $amount);
+        if ($callback !== null) {
+            ($ret === EconomyAPI::RET_SUCCESS) ? $callback(true) : $callback(false);
+        }
     }
 }
