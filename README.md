@@ -1,6 +1,6 @@
 # libPiggyEconomy
 
-libPiggyEconomy is a virion for easy support of multiple economy providers including EconomyAPI, MultiEconomy, & PMMP's XP levels.
+libPiggyEconomy is a virion for easy support of multiple economy providers including EconomyAPI, MultiEconomy, ParoxityEconomy, & PMMP's XP levels.
 
 You may be wondering, why the absolute garbage name for a virion? Well, blame Aericio.
 
