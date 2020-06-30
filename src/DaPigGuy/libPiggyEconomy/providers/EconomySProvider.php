@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace DaPigGuy\libPiggyEconomy\providers;
 
 use onebone\economyapi\EconomyAPI;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\Server;
 
 class EconomySProvider extends EconomyProvider

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace DaPigGuy\libPiggyEconomy\providers;
 
 use pocketmine\entity\utils\ExperienceUtils;
-use pocketmine\Player;
+use pocketmine\player\Player;
 
 class XPProvider extends EconomyProvider
 {
@@ -16,14 +16,14 @@ class XPProvider extends EconomyProvider
 
     public function getMoney(Player $player): float
     {
-        return $player->getXpLevel() + $player->getXpProgress();
+        return $player->getXpManager()->getXpLevel() + $player->getXpManager()->getXpProgress();
     }
 
     public function giveMoney(Player $player, float $amount): void
     {
         $levels = (int)floor($amount);
-        $player->addXpLevels($levels);
-        $player->addXp((int)(ExperienceUtils::getXpToCompleteLevel($player->getXpLevel()) * ($amount - $levels)));
+        $player->getXpManager()->addXpLevels($levels);
+        $player->getXpManager()->addXp((int)(ExperienceUtils::getXpToCompleteLevel($player->getXpManager()->getXpLevel()) * ($amount - $levels)));
     }
 
     public function takeMoney(Player $player, float $amount): void
@@ -34,7 +34,7 @@ class XPProvider extends EconomyProvider
     public function setMoney(Player $player, float $amount): void
     {
         $levels = (int)floor($amount);
-        $player->setXpLevel($levels);
-        $player->setXpProgress($amount - $levels);
+        $player->getXpManager()->setXpLevel($levels);
+        $player->getXpManager()->setXpProgress($amount - $levels);
     }
 }
