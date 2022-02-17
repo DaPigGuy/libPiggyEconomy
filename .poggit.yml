@@ -1,6 +1,7 @@
 --- # Poggit-CI Manifest. Open the CI at https://poggit.pmmp.io/ci/DaPigGuy/libPiggyEconomy
 branches:
 - master
+- pmmp-4.0.0
 projects:
   libPiggyEconomy:
     model: virion

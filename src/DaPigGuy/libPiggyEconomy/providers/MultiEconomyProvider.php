@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace DaPigGuy\libPiggyEconomy\providers;
 
 use DaPigGuy\libPiggyEconomy\exceptions\UnknownMultiEconomyCurrencyException;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\Server;
 use Twisted\MultiEconomy\Currency;
 use Twisted\MultiEconomy\MultiEconomy;
