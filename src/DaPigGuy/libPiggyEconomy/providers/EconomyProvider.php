@@ -17,8 +17,8 @@ abstract class EconomyProvider
     }
 
     /**
-     * $callback -> function(?float $money): void{}
-     * $money is null if player wasn't found.
+     * $callback -> function(?float $amount): void{}
+     * $amount is the default balance if player wasn't found, float/int otherwise.
      */
     abstract function getMoney(Player $player, callable $callback): void;
 
