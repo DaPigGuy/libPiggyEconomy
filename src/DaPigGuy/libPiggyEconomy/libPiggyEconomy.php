@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace DaPigGuy\libPiggyEconomy;
 
+use cooldogedev\BedrockEconomy\BedrockEconomy;
 use DaPigGuy\libPiggyEconomy\exceptions\MissingProviderDependencyException;
 use DaPigGuy\libPiggyEconomy\exceptions\UnknownProviderException;
 use DaPigGuy\libPiggyEconomy\providers\EconomyProvider;
@@ -26,6 +27,7 @@ class libPiggyEconomy
             self::$hasInitiated = true;
 
             self::registerProvider(["economys", "economyapi"], EconomySProvider::class);
+            self::registerProvider(["bedrockeconomy"], BedrockEconomy::class);
             self::registerProvider(["multieconomy"], MultiEconomyProvider::class);
             self::registerProvider(["paroxityeconomy", "paroxityecon"], ParoxityEconProvider::class);
             self::registerProvider(["xp", "exp", "experience"], XPProvider::class);
@@ -49,7 +51,6 @@ class libPiggyEconomy
         if (!isset(self::$economyProviders[strtolower($providerInformation["provider"])])) throw new UnknownProviderException("Provider " . $providerInformation["provider"] . " not found.");
         $provider = self::$economyProviders[strtolower($providerInformation["provider"])];
         if (!$provider::checkDependencies()) throw new MissingProviderDependencyException("Dependencies for provider " . $providerInformation["provider"] . " not found.");
-        $provider = new $provider($providerInformation);
-        return $provider;
+        return new $provider($providerInformation);
     }
 }

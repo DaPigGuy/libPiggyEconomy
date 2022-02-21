@@ -5,13 +5,12 @@ declare(strict_types=1);
 namespace DaPigGuy\libPiggyEconomy\providers;
 
 use onebone\economyapi\EconomyAPI;
-use pocketmine\Player;
+use pocketmine\player\Player;
 use pocketmine\Server;
 
 class EconomySProvider extends EconomyProvider
 {
-    /** @var EconomyAPI */
-    private $economyAPI;
+    private EconomyAPI $economyAPI;
 
     public static function checkDependencies(): bool
     {
@@ -37,24 +36,18 @@ class EconomySProvider extends EconomyProvider
     public function giveMoney(Player $player, float $amount, ?callable $callback = null): void
     {
         $ret = $this->economyAPI->addMoney($player, $amount);
-        if ($callback !== null) {
-            $callback($ret === EconomyAPI::RET_SUCCESS);
-        }
+        if ($callback !== null)  $callback($ret === EconomyAPI::RET_SUCCESS);
     }
 
     public function takeMoney(Player $player, float $amount, ?callable $callback = null): void
     {
         $ret = $this->economyAPI->reduceMoney($player, $amount);
-        if ($callback !== null) {
-            $callback($ret === EconomyAPI::RET_SUCCESS);
-        }
+        if ($callback !== null)  $callback($ret === EconomyAPI::RET_SUCCESS);
     }
 
     public function setMoney(Player $player, float $amount, ?callable $callback = null): void
     {
         $ret = $this->economyAPI->setMoney($player, $amount);
-        if ($callback !== null) {
-            $callback($ret === EconomyAPI::RET_SUCCESS);
-        }
+        if ($callback !== null) $callback($ret === EconomyAPI::RET_SUCCESS);
     }
 }
