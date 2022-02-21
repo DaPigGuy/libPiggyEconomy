@@ -15,7 +15,10 @@ class libPiggyEconomy
 {
     public static bool $hasInitiated = false;
 
-    /** @var EconomyProvider[] */
+    /**
+     * @var string[] $economyProviders
+     * @phpstan-var array<class-string<EconomyProvider>>
+     */
     public static array $economyProviders;
 
     public static function init(): void
@@ -50,7 +53,6 @@ class libPiggyEconomy
         $provider = self::$economyProviders[strtolower($providerInformation["provider"])];
         if (!$provider::checkDependencies()) {
             throw new MissingProviderDependencyException("Dependencies for provider " . $providerInformation["provider"] . " not found.");
-
         }
         return new $provider($providerInformation);
     }
