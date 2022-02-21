@@ -24,9 +24,7 @@ class XPProvider extends EconomyProvider
         $levels = (int)floor($amount);
         $levelsAdded = $player->getXpManager()->addXpLevels($levels);
         $xpAdded = $player->getXpManager()->addXp((int)(ExperienceUtils::getXpToCompleteLevel($player->getXpManager()->getXpLevel()) * ($amount - $levels)));
-        if ($callback !== null) {
-            $callback($levelsAdded && $xpAdded);
-        }
+        if ($callback) $callback($levelsAdded && $xpAdded);
     }
 
     public function takeMoney(Player $player, float $amount, ?callable $callback = null): void
@@ -39,8 +37,6 @@ class XPProvider extends EconomyProvider
         $levels = (int)floor($amount);
         $levelSet = $player->getXpManager()->setXpLevel($levels);
         $progressSet = $player->getXpManager()->setXpProgress($amount - $levels);
-        if ($callback !== null) {
-            $callback($levelSet && $progressSet);
-        }
+        if ($callback) $callback($levelSet && $progressSet);
     }
 }

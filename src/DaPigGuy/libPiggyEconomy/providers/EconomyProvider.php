@@ -4,10 +4,6 @@ namespace DaPigGuy\libPiggyEconomy\providers;
 
 use pocketmine\player\Player;
 
-/**
- * Interface EconomyProvider
- * @package DaPigGuy\libPiggyEconomy\providers
- */
 abstract class EconomyProvider
 {
     public static function checkDependencies(): bool

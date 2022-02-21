@@ -39,18 +39,18 @@ class BedrockEconomyProvider extends EconomyProvider
     public function giveMoney(Player $player, float $amount, ?callable $callback = null): void
     {
         $ret = $this->api->addToPlayerBalance($player->getName(), (int)$amount);
-        if ($callback !== null) $callback($ret);
+        if ($callback) $callback($ret);
     }
 
     public function takeMoney(Player $player, float $amount, ?callable $callback = null): void
     {
         $ret = $this->api->subtractFromPlayerBalance($player->getName(), (int)$amount);
-        if ($callback !== null) $callback($ret);
+        if ($callback) $callback($ret);
     }
 
     public function setMoney(Player $player, float $amount, ?callable $callback = null): void
     {
         $ret = $this->api->setPlayerBalance($player->getName(), (int)$amount);
-        if ($callback !== null) $callback($ret);
+        if ($callback) $callback($ret);
     }
 }
