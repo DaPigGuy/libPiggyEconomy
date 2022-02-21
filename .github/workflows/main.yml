@@ -1,0 +1,21 @@
+name: PHPStan
+
+on: [push, pull_request]
+
+jobs:
+  phpstan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+        with:
+          ref: ${{ github.ref }}
+      - name: Create Vendor Directory
+        run: mkdir vendor
+      - name: Download Plugin Dependencies
+        run: |
+          wget -O vendor/BedrockEconomy.phar https://poggit.pmmp.io/r/162549/BedrockEconomy.phar
+          wget -O vendor/EconomyAPI.phar https://poggit.pmmp.io/r/153507/EconomyAPI.phar
+      - name: Run PHPStan
+        uses: paroxity/pmmp-phpstan-action@4.2.0
+        with:
+          phpstan-config: phpstan.neon.dist

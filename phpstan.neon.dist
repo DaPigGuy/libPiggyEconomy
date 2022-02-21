@@ -1,0 +1,13 @@
+parameters:
+  paths:
+    - /source/src
+  level: 7
+  bootstrapFiles:
+    - phar:///pocketmine/PocketMine-MP.phar/vendor/autoload.php
+  scanDirectories:
+    - phar:///source/vendor/BedrockEconomy.phar/src/
+    - phar:///source/vendor/EconomyAPI.phar/src/
+  excludePaths:
+    analyse:
+     - source/vendor
+  checkMissingIterableValueType: false
