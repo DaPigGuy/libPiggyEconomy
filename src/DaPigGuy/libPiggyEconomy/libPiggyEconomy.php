@@ -32,6 +32,9 @@ class libPiggyEconomy
         }
     }
 
+    /**
+     * @phpstan-param class-string<EconomyProvider> $economyProvider
+     */
     public static function registerProvider(array $providerNames, string $economyProvider): void
     {
         foreach ($providerNames as $providerName) {
@@ -49,7 +52,6 @@ class libPiggyEconomy
         if (!isset(self::$economyProviders[strtolower($providerInformation["provider"])])) {
             throw new UnknownProviderException("Provider " . $providerInformation["provider"] . " not found.");
         }
-        /** @var EconomyProvider $provider */
         $provider = self::$economyProviders[strtolower($providerInformation["provider"])];
         if (!$provider::checkDependencies()) {
             throw new MissingProviderDependencyException("Dependencies for provider " . $providerInformation["provider"] . " not found.");
