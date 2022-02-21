@@ -15,6 +15,7 @@ class libPiggyEconomy
 {
     public static bool $hasInitiated = false;
 
+    /** @var EconomyProvider[] */
     public static array $economyProviders;
 
     public static function init(): void
