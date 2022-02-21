@@ -14,27 +14,27 @@ class XPProvider extends EconomyProvider
         return "Levels";
     }
 
-    public function getMoney(Player $player): float
+    public function getMoney(Player $player, callable $callback): void
     {
-        return $player->getXpManager()->getXpLevel() + $player->getXpManager()->getXpProgress();
+        $callback($player->getXpManager()->getXpLevel() + $player->getXpManager()->getXpProgress());
     }
 
-    public function giveMoney(Player $player, float $amount): void
+    public function giveMoney(Player $player, float $amount, ?callable $callback = null): void
     {
         $levels = (int)floor($amount);
-        $player->getXpManager()->addXpLevels($levels);
-        $player->getXpManager()->addXp((int)(ExperienceUtils::getXpToCompleteLevel($player->getXpManager()->getXpLevel()) * ($amount - $levels)));
+        $ret = $player->getXpManager()->addXpLevels($levels) && $player->getXpManager()->addXp((int)(ExperienceUtils::getXpToCompleteLevel($player->getXpManager()->getXpLevel()) * ($amount - $levels)));
+        if ($callback) $callback($ret);
     }
 
-    public function takeMoney(Player $player, float $amount): void
+    public function takeMoney(Player $player, float $amount, ?callable $callback = null): void
     {
-        $this->giveMoney($player, -$amount);
+        $this->giveMoney($player, -$amount, $callback);
     }
 
-    public function setMoney(Player $player, float $amount): void
+    public function setMoney(Player $player, float $amount, ?callable $callback = null): void
     {
         $levels = (int)floor($amount);
-        $player->getXpManager()->setXpLevel($levels);
-        $player->getXpManager()->setXpProgress($amount - $levels);
+        $ret = $player->getXpManager()->setXpLevel($levels) && $player->getXpManager()->setXpProgress($amount - $levels);
+        if ($callback) $callback($ret);
     }
 }

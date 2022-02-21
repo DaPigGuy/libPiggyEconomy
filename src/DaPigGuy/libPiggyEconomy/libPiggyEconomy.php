@@ -4,20 +4,22 @@ declare(strict_types=1);
 
 namespace DaPigGuy\libPiggyEconomy;
 
-use DaPigGuy\libPiggyEconomy\exceptions\UnknownProviderException;
 use DaPigGuy\libPiggyEconomy\exceptions\MissingProviderDependencyException;
+use DaPigGuy\libPiggyEconomy\exceptions\UnknownProviderException;
+use DaPigGuy\libPiggyEconomy\providers\BedrockEconomyProvider;
 use DaPigGuy\libPiggyEconomy\providers\EconomyProvider;
 use DaPigGuy\libPiggyEconomy\providers\EconomySProvider;
-use DaPigGuy\libPiggyEconomy\providers\MultiEconomyProvider;
 use DaPigGuy\libPiggyEconomy\providers\XPProvider;
 
 class libPiggyEconomy
 {
-    /** @var bool */
-    public static $hasInitiated = false;
+    public static bool $hasInitiated = false;
 
-    /** @var EconomyProvider[] */
-    public static $economyProviders;
+    /**
+     * @var string[] $economyProviders
+     * @phpstan-var array<class-string<EconomyProvider>>
+     */
+    public static array $economyProviders;
 
     public static function init(): void
     {
@@ -25,11 +27,14 @@ class libPiggyEconomy
             self::$hasInitiated = true;
 
             self::registerProvider(["economys", "economyapi"], EconomySProvider::class);
-            self::registerProvider(["multieconomy"], MultiEconomyProvider::class);
+            self::registerProvider(["bedrockeconomy"], BedrockEconomyProvider::class);
             self::registerProvider(["xp", "exp", "experience"], XPProvider::class);
         }
     }
 
+    /**
+     * @phpstan-param class-string<EconomyProvider> $economyProvider
+     */
     public static function registerProvider(array $providerNames, string $economyProvider): void
     {
         foreach ($providerNames as $providerName) {
@@ -44,10 +49,13 @@ class libPiggyEconomy
      */
     public static function getProvider(array $providerInformation): EconomyProvider
     {
-        if (!isset(self::$economyProviders[strtolower($providerInformation["provider"])])) throw new UnknownProviderException("Provider " . $providerInformation["provider"] . " not found.");
+        if (!isset(self::$economyProviders[strtolower($providerInformation["provider"])])) {
+            throw new UnknownProviderException("Provider " . $providerInformation["provider"] . " not found.");
+        }
         $provider = self::$economyProviders[strtolower($providerInformation["provider"])];
-        if (!$provider::checkDependencies()) throw new MissingProviderDependencyException("Dependencies for provider " . $providerInformation["provider"] . " not found.");
-        $provider = new $provider($providerInformation);
-        return $provider;
+        if (!$provider::checkDependencies()) {
+            throw new MissingProviderDependencyException("Dependencies for provider " . $providerInformation["provider"] . " not found.");
+        }
+        return new $provider($providerInformation);
     }
 }

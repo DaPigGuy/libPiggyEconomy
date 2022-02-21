@@ -1,6 +1,5 @@
 <?php
 
-
 namespace DaPigGuy\libPiggyEconomy\providers;
 
 use pocketmine\player\Player;
@@ -17,11 +16,27 @@ abstract class EconomyProvider
         return "$";
     }
 
-    abstract function getMoney(Player $player): float;
+    /**
+     * $callback -> function(float|int $amount): void{}
+     * $amount is the default balance if player wasn't found, float/int otherwise.
+     */
+    abstract function getMoney(Player $player, callable $callback): void;
 
-    abstract function giveMoney(Player $player, float $amount): void;
+    /**
+     * $callback -> function(bool $success): void{}
+     * $success is true if money was given successfully, otherwise false.
+     */
+    abstract function giveMoney(Player $player, float $amount, ?callable $callback = null): void;
 
-    abstract function takeMoney(Player $player, float $amount): void;
+    /**
+     * $callback -> function(bool $success): void{}
+     * $success is true if money was taken successfully, otherwise false.
+     */
+    abstract function takeMoney(Player $player, float $amount, ?callable $callback = null): void;
 
-    abstract function setMoney(Player $player, float $amount): void;
+    /**
+     * $callback -> function(bool $success): void{}
+     * $success is true if money was set successfully, otherwise false.
+     */
+    abstract function setMoney(Player $player, float $amount, ?callable $callback = null): void;
 }

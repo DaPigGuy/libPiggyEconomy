@@ -1,46 +1,53 @@
 # libPiggyEconomy
 
-libPiggyEconomy is a virion for easy support of multiple economy providers including EconomyAPI, MultiEconomy, & PMMP's XP levels.
+libPiggyEconomy is a virion for easy support of multiple economy providers.
 
-You may be wondering, why the absolute garbage name for a virion? Well, blame Aericio.
+## Supported Providers
 
-![](https://cdn.discordapp.com/attachments/305887490613444608/644764172273319936/unknown.png)
+- [EconomyAPI](https://poggit.pmmp.io/p/EconomyAPI) by onebone/poggit-orphanage
+- [BedrockEconomy](https://poggit.pmmp.io/p/BedrockEconomy) by cooldogedev
+- Experience (PMMP)
 
 ## Usage
 
 ### Setup
+
 ```php
 libPiggyEconomy::init()
 ```
 
 ### Using Economy Providers
+
 ```php
 libPiggyEconomy::getProvider($providerInformation)
 ```
-Provider information is an array with the keys ```provider``` and ```multieconomy-currency```. The latter is optional and used only for MultiEconomy.
+
+`$providerInformation` is an array with the key ```provider```.
 
 #### Economy Provider Methods
-|Method|Description|
----|---
-|```EconomyProvider::getMonetaryUnit(): string```|Returns symbol of currency|
-|```EconomyProvider::getMoney(Player $player): float```|Get balance of a player|
-|```EconomyProvider::giveMoney(Player $player, int $amount): void```|Give money to a player|
-|```EconomyProvider::takeMoney(Player $player, int $amount): void```|Take money from a player|
-|```EconomyProvider::setMoney(Player $player, int $amount): void```|Set balance of a player|
+
+| Method                                                                                            | Description                | Callback Signature                                   | Callback Description                                                      |
+|---------------------------------------------------------------------------------------------------|----------------------------|------------------------------------------------------|---------------------------------------------------------------------------|
+| ```EconomyProvider::getMonetaryUnit(): string```                                                  | Returns symbol of currency | `none`                                               | `none`                                                                    |
+| ```EconomyProvider::getMoney(Player $player, callable $callback): void```                         | Get balance of a player    | <code>function(float&#124;int $amount) void{}</code> | Returns default balance if player wasn't found, float&#124;int otherwise. |
+| ```EconomyProvider::giveMoney(Player $player, float $amount, ?callable $callback = null): void``` | Give money to a player     | `function(bool $success): void{}`                    | Returns true if money was given successfully, otherwise false.            |
+| ```EconomyProvider::takeMoney(Player $player, float $amount, ?callable $callback = null): void``` | Take money from a player   | `function(bool $success): void{}`                    | Returns true if money was taken successfully, otherwise false.            |
+| ```EconomyProvider::setMoney(Player $player, float $amount, ?callable $callback = null): void```  | Set balance of a player    | `function(bool $success): void{}`                    | Returns true if money was set successfully, otherwise false.              |
 
 ### Error Handling
 
 There are several exceptions that can be thrown that you may want to handle in your plugin:
+
 * MissingProviderDependencyException
-* UnknownMultiEconomyCurrencyException
 * UnknownProviderException
 
 ## Examples
+
 config.yml
+
 ```yaml
 economy:
-    provider: multieconomy
-    multieconomy-currency: pigcoins
+  provider: economyapi
 ```
 
 AmazingPlugin.php
