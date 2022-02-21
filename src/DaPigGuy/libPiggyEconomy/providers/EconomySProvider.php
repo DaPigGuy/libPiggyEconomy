@@ -29,7 +29,7 @@ class EconomySProvider extends EconomyProvider
 
     public function getMoney(Player $player, callable $callback): void
     {
-        $callback($this->economyAPI->myMoney($player) ?? 0);
+        $callback($this->economyAPI->myMoney($player) || 0);
     }
 
     public function giveMoney(Player $player, float $amount, ?callable $callback = null): void
