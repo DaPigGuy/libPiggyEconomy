@@ -34,7 +34,7 @@ class BedrockEconomyProvider extends EconomyProvider
 
     public function getMoney(Player $player, callable $callback): void
     {
-        $this->api->getPlayerBalance($player->getName(), ClosureContext::create(fn(?int $balance) => $balance ?? $this->currency->getDefaultBalance()));
+        $callback($this->api->getPlayerBalance($player->getName(), ClosureContext::create(fn(?int $balance) => $balance ?? $this->currency->getDefaultBalance())));
     }
 
     public function giveMoney(Player $player, float $amount, ?callable $callback = null): void
