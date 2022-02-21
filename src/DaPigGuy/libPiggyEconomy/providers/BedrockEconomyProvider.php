@@ -7,6 +7,7 @@ namespace DaPigGuy\libPiggyEconomy\providers;
 use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
 use cooldogedev\BedrockEconomy\BedrockEconomy;
 use cooldogedev\BedrockEconomy\currency\CurrencyManager;
+use cooldogedev\BedrockEconomy\libs\cooldogedev\libSQL\context\ClosureContext;
 use pocketmine\player\Player;
 use pocketmine\Server;
 
@@ -33,24 +34,21 @@ class BedrockEconomyProvider extends EconomyProvider
 
     public function getMoney(Player $player, callable $callback): void
     {
-        $callback($this->api->getPlayerBalance($player->getName()) ?? $this->currency->getDefaultBalance());
+        $this->api->getPlayerBalance($player->getName(), ClosureContext::create(fn(?int $balance) => $balance ?? $this->currency->getDefaultBalance()));
     }
 
     public function giveMoney(Player $player, float $amount, ?callable $callback = null): void
     {
-        $ret = $this->api->addToPlayerBalance($player->getName(), (int)$amount);
-        if ($callback) $callback($ret);
+        $this->api->addToPlayerBalance($player->getName(), (int)$amount, $callback ? ClosureContext::create($callback) : null);
     }
 
     public function takeMoney(Player $player, float $amount, ?callable $callback = null): void
     {
-        $ret = $this->api->subtractFromPlayerBalance($player->getName(), (int)$amount);
-        if ($callback) $callback($ret);
+        $this->api->subtractFromPlayerBalance($player->getName(), (int)$amount, $callback ? ClosureContext::create($callback) : null);
     }
 
     public function setMoney(Player $player, float $amount, ?callable $callback = null): void
     {
-        $ret = $this->api->setPlayerBalance($player->getName(), (int)$amount);
-        if ($callback) $callback($ret);
+        $this->api->setPlayerBalance($player->getName(), (int)$amount, $callback ? ClosureContext::create($callback) : null);
     }
 }
