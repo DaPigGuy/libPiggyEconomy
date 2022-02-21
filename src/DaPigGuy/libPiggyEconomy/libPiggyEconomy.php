@@ -4,9 +4,9 @@ declare(strict_types=1);
 
 namespace DaPigGuy\libPiggyEconomy;
 
-use cooldogedev\BedrockEconomy\BedrockEconomy;
 use DaPigGuy\libPiggyEconomy\exceptions\MissingProviderDependencyException;
 use DaPigGuy\libPiggyEconomy\exceptions\UnknownProviderException;
+use DaPigGuy\libPiggyEconomy\providers\BedrockEconomyProvider;
 use DaPigGuy\libPiggyEconomy\providers\EconomyProvider;
 use DaPigGuy\libPiggyEconomy\providers\EconomySProvider;
 use DaPigGuy\libPiggyEconomy\providers\XPProvider;
@@ -25,7 +25,7 @@ class libPiggyEconomy
             self::$hasInitiated = true;
 
             self::registerProvider(["economys", "economyapi"], EconomySProvider::class);
-            self::registerProvider(["bedrockeconomy"], BedrockEconomy::class);
+            self::registerProvider(["bedrockeconomy"], BedrockEconomyProvider::class);
             self::registerProvider(["xp", "exp", "experience"], XPProvider::class);
         }
     }
