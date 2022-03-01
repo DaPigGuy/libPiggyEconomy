@@ -4,13 +4,9 @@ declare(strict_types=1);
 
 namespace DaPigGuy\libPiggyEconomy\providers;
 
-use DaPigGuy\libPiggyEconomy\exceptions\MethodNotImplementedException;
 use DaPigGuy\libPiggyEconomy\libPiggyEconomy;
 use pocketmine\player\Player;
 use pocketmine\Server;
-use SOFe\Capital\Analytics\Single\CachedValue;
-use SOFe\Capital\Analytics\Single\PlayerInfoUpdater;
-use SOFe\Capital\Analytics\Single\Query;
 use SOFe\Capital\Capital;
 use SOFe\Capital\CapitalException;
 use SOFe\Capital\LabelSet;
