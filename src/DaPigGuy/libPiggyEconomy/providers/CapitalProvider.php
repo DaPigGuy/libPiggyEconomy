@@ -4,9 +4,13 @@ declare(strict_types=1);
 
 namespace DaPigGuy\libPiggyEconomy\providers;
 
+use DaPigGuy\libPiggyEconomy\exceptions\MethodNotImplementedException;
 use DaPigGuy\libPiggyEconomy\libPiggyEconomy;
 use pocketmine\player\Player;
 use pocketmine\Server;
+use SOFe\Capital\Analytics\Single\CachedValue;
+use SOFe\Capital\Analytics\Single\PlayerInfoUpdater;
+use SOFe\Capital\Analytics\Single\Query;
 use SOFe\Capital\Capital;
 use SOFe\Capital\CapitalException;
 use SOFe\Capital\LabelSet;
@@ -39,7 +43,7 @@ class CapitalProvider extends EconomyProvider
     public function getMoney(Player $player, callable $callback): void
     {
         Capital::api($this->version, function (Capital $api) use ($callback, $player) {
-            $accounts = $api->findAccountsComplete($player, $this->selector);
+            $accounts = yield from $api->findAccountsComplete($player, $this->selector);
             $callback($api->getBalance($accounts[0]) ?: 0);
         });
     }
@@ -70,12 +74,12 @@ class CapitalProvider extends EconomyProvider
 
     public function setMoney(Player $player, float $amount, ?callable $callback = null): void
     {
-        Capital::api($this->version, function (Capital $api) use ($callback, $amount, $player) {
-            try {
-                yield from $api->addMoney($this->oracle, $player, $this->selector, (int)$amount, new LabelSet(["reason" => "some reason"]),);
-                if ($callback) $callback(true);
-            } catch (CapitalException $e) {
-                if ($callback) $callback(true);
+        $this->getMoney($player, function ($balance) use ($callback, $player, $amount): void {
+            $difference = $balance - (int)$amount;
+            if ($difference >= 0) {
+                $this->takeMoney($player, $difference, fn(?bool $success) => $callback($success));
+            } else {
+                $this->giveMoney($player, $difference, fn(?bool $success) => $callback($success));
             }
         });
     }
