@@ -11,12 +11,12 @@ use DaPigGuy\libPiggyEconomy\providers\CapitalProvider;
 use DaPigGuy\libPiggyEconomy\providers\EconomyProvider;
 use DaPigGuy\libPiggyEconomy\providers\EconomySProvider;
 use DaPigGuy\libPiggyEconomy\providers\XPProvider;
-use pocketmine\plugin\Plugin;
+use pocketmine\plugin\PluginBase;
 
 class libPiggyEconomy
 {
     public static bool $hasInitiated = false;
-    public static Plugin $plugin;
+    public static PluginBase $plugin;
 
     /**
      * @var string[] $economyProviders
@@ -24,7 +24,7 @@ class libPiggyEconomy
      */
     public static array $economyProviders;
 
-    public static function init(Plugin $plugin): void
+    public static function init(PluginBase $plugin): void
     {
         if (!self::$hasInitiated) {
             self::$hasInitiated = true;

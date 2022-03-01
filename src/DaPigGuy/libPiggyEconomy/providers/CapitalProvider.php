@@ -25,9 +25,7 @@ class CapitalProvider extends EconomyProvider
 
     public function __construct()
     {
-        Capital::api($this->version, function (Capital $api) {
-            $this->selector = $api->completeConfig(libPiggyEconomy::$plugin->getConfig()->get("capital-selector"));
-        });
+        Capital::api($this->version, fn(Capital $api) => $this->selector = $api->completeConfig(libPiggyEconomy::$plugin->getConfig()->get("capital-selector")));
         $this->oracle = libPiggyEconomy::$plugin->getName();
     }
 
@@ -40,7 +38,7 @@ class CapitalProvider extends EconomyProvider
     {
         Capital::api($this->version, function (Capital $api) use ($callback, $player) {
             $accounts = yield from $api->findAccountsComplete($player, $this->selector);
-            $callback($api->getBalance($accounts[0]) ?: 0);
+            $callback($api->getBalance($accounts[0]));
         });
     }
 
