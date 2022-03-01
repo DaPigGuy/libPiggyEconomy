@@ -7,13 +7,16 @@ namespace DaPigGuy\libPiggyEconomy;
 use DaPigGuy\libPiggyEconomy\exceptions\MissingProviderDependencyException;
 use DaPigGuy\libPiggyEconomy\exceptions\UnknownProviderException;
 use DaPigGuy\libPiggyEconomy\providers\BedrockEconomyProvider;
+use DaPigGuy\libPiggyEconomy\providers\CapitalProvider;
 use DaPigGuy\libPiggyEconomy\providers\EconomyProvider;
 use DaPigGuy\libPiggyEconomy\providers\EconomySProvider;
 use DaPigGuy\libPiggyEconomy\providers\XPProvider;
+use pocketmine\plugin\Plugin;
 
 class libPiggyEconomy
 {
     public static bool $hasInitiated = false;
+    public static Plugin $plugin;
 
     /**
      * @var string[] $economyProviders
@@ -21,15 +24,17 @@ class libPiggyEconomy
      */
     public static array $economyProviders;
 
-    public static function init(): void
+    public static function init(Plugin $plugin): void
     {
         if (!self::$hasInitiated) {
             self::$hasInitiated = true;
 
             self::registerProvider(["economys", "economyapi"], EconomySProvider::class);
             self::registerProvider(["bedrockeconomy"], BedrockEconomyProvider::class);
+            self::registerProvider(["capital"], CapitalProvider::class);
             self::registerProvider(["xp", "exp", "experience"], XPProvider::class);
         }
+        self::$plugin = $plugin;
     }
 
     /**
