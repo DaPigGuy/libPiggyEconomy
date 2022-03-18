@@ -47,7 +47,7 @@ config.yml
 
 ```yaml
 economy:
-  provider: economyapi
+  provider: bedrockeconomy
 ```
 
 AmazingPlugin.php
