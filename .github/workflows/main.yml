@@ -15,6 +15,7 @@ jobs:
         run: |
           wget -O vendor/BedrockEconomy.phar https://poggit.pmmp.io/r/162549/BedrockEconomy.phar
           wget -O vendor/EconomyAPI.phar https://poggit.pmmp.io/r/153507/EconomyAPI.phar
+          wget -O vendor/Capital.phar https://poggit.pmmp.io/r/164785/Capital.phar
       - name: Run PHPStan
         uses: paroxity/pmmp-phpstan-action@4.2.0
         with:
