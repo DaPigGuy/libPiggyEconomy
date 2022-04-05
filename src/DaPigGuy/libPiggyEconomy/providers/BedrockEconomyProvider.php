@@ -4,7 +4,7 @@ declare(strict_types=1);
 
 namespace DaPigGuy\libPiggyEconomy\providers;
 
-use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
+use cooldogedev\BedrockEconomy\api\version\LegacyBEAPI;
 use cooldogedev\BedrockEconomy\BedrockEconomy;
 use cooldogedev\BedrockEconomy\currency\CurrencyManager;
 use cooldogedev\BedrockEconomy\libs\cooldogedev\libSQL\context\ClosureContext;
@@ -13,7 +13,7 @@ use pocketmine\Server;
 
 class BedrockEconomyProvider extends EconomyProvider
 {
-    private BedrockEconomyAPI $api;
+    private LegacyBEAPI $api;
     private CurrencyManager $currency;
 
     public static function checkDependencies(): bool
@@ -23,7 +23,7 @@ class BedrockEconomyProvider extends EconomyProvider
 
     public function __construct()
     {
-        $this->api = BedrockEconomy::getInstance()->getAPI();
+        $this->api = LegacyBEAPI::getInstance();
         $this->currency = BedrockEconomy::getInstance()->getCurrencyManager();
     }
 
