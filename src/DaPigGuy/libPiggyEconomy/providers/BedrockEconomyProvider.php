@@ -23,7 +23,7 @@ class BedrockEconomyProvider extends EconomyProvider
 
     public function __construct()
     {
-        $this->api = BedrockEconomy::getInstance()->getAPI();
+        $this->api = BedrockEconomyAPI::legacy();
         $this->currency = BedrockEconomy::getInstance()->getCurrencyManager();
     }
 
