@@ -1,5 +1,5 @@
 name: libPiggyEconomy
-version: 3.0.1
+version: 3.0.2
 antigen: DaPigGuy\libPiggyEconomy
-api: 4.0.0
+api: 5.0.0
 author: DaPigGuy

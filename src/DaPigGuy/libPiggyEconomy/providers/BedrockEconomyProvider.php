@@ -4,11 +4,11 @@ declare(strict_types=1);
 
 namespace DaPigGuy\libPiggyEconomy\providers;
 
+use cooldogedev\BedrockEconomy\api\legacy\ClosureContext;
 use cooldogedev\BedrockEconomy\BedrockEconomy;
 use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
 use cooldogedev\BedrockEconomy\api\version\LegacyBEAPI;
 use cooldogedev\BedrockEconomy\currency\CurrencyManager;
-use cooldogedev\BedrockEconomy\libs\cooldogedev\libSQL\context\ClosureContext;
 use pocketmine\player\Player;
 use pocketmine\Server;
 
