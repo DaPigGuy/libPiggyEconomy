@@ -37,7 +37,7 @@ class BedrockEconomyProvider extends EconomyProvider
     {
         Await::f2c(
             fn () => yield from $this->api->get($player->getXuid(), $player->getName()),
-            fn ($result) => $callback($result['amount']),
+            fn (array $result) => $callback($result['amount']),
             fn () => $callback($this->currency->defaultAmount)
         );
     }
