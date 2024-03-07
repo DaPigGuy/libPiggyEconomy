@@ -16,6 +16,6 @@ jobs:
           wget -O vendor/BedrockEconomy.phar https://poggit.pmmp.io/r/230746/BedrockEconomy.phar
           wget -O vendor/EconomyAPI.phar https://poggit.pmmp.io/r/153507/EconomyAPI.phar
       - name: Run PHPStan
-        uses: paroxity/pmmp-phpstan-action@5.1.2
+        uses: paroxity/pmmp-phpstan-action@5.12.0
         with:
           phpstan-config: phpstan.neon.dist
