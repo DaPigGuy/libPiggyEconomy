@@ -38,15 +38,16 @@ class BedrockEconomyProvider extends EconomyProvider
     {
         Await::f2c(
             fn () => yield from $this->api->get($player->getXuid(), $player->getName()),
-            fn (array $result) => $callback($result['amount']),
+            fn (array $result) => $callback((float)"$result[amount].$result[decimals]"),
             fn () => $callback($this->currency->defaultAmount)
         );
     }
 
     public function giveMoney(Player $player, float $amount, ?callable $callback = null): void
     {
+        $decimals = (int)(explode('.', strval($amount))[1] ?? 0);
         Await::f2c(
-            fn () => yield from $this->api->add($player->getXuid(), $player->getName(), (int)$amount, 0),
+            fn () => yield from $this->api->add($player->getXuid(), $player->getName(), (int)$amount, $decimals),
             $callback,
             fn () => $callback ? $callback(false) : null
         );
@@ -54,8 +55,9 @@ class BedrockEconomyProvider extends EconomyProvider
 
     public function takeMoney(Player $player, float $amount, ?callable $callback = null): void
     {
+        $decimals = (int)(explode('.', strval($amount))[1] ?? 0);
         Await::f2c(
-            fn () => yield from $this->api->subtract($player->getXuid(), $player->getName(), (int)$amount, 0),
+            fn () => yield from $this->api->subtract($player->getXuid(), $player->getName(), (int)$amount, $decimals),
             $callback,
             fn () => $callback ? $callback(false) : null
         );
@@ -63,8 +65,9 @@ class BedrockEconomyProvider extends EconomyProvider
 
     public function setMoney(Player $player, float $amount, ?callable $callback = null): void
     {
+        $decimals = (int)(explode('.', strval($amount))[1] ?? 0);
         Await::f2c(
-            fn () => yield from $this->api->set($player->getXuid(), $player->getName(), (int)$amount, 0),
+            fn () => yield from $this->api->set($player->getXuid(), $player->getName(), (int)$amount, $decimals),
             $callback,
             fn () => $callback ? $callback(false) : null
         );
