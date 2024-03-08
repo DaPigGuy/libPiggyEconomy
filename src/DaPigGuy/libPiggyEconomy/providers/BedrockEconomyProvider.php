@@ -4,17 +4,17 @@ declare(strict_types=1);
 
 namespace DaPigGuy\libPiggyEconomy\providers;
 
-use cooldogedev\BedrockEconomy\api\type\AsyncAPI;
+use cooldogedev\BedrockEconomy\api\type\ClosureAPI;
 use cooldogedev\BedrockEconomy\BedrockEconomy;
 use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
+use cooldogedev\BedrockEconomy\api\util\ClosureWrapper;
 use cooldogedev\BedrockEconomy\currency\Currency;
-use cooldogedev\BedrockEconomy\libs\SOFe\AwaitGenerator\Await;
 use pocketmine\player\Player;
 use pocketmine\Server;
 
 class BedrockEconomyProvider extends EconomyProvider
 {
-    private AsyncAPI $api;
+    private ClosureAPI $api;
     private Currency $currency;
 
     public static function checkDependencies(): bool
@@ -25,7 +25,7 @@ class BedrockEconomyProvider extends EconomyProvider
 
     public function __construct()
     {
-        $this->api = BedrockEconomyAPI::ASYNC();
+        $this->api = BedrockEconomyAPI::CLOSURE();
         $this->currency = BedrockEconomy::getInstance()->getCurrency();
     }
 
@@ -36,40 +36,50 @@ class BedrockEconomyProvider extends EconomyProvider
 
     public function getMoney(Player $player, callable $callback): void
     {
-        Await::f2c(
-            fn () => yield from $this->api->get($player->getXuid(), $player->getName()),
-            fn (array $result) => $callback((float)"$result[amount].$result[decimals]"),
-            fn () => $callback($this->currency->defaultAmount)
+        $this->api->get(
+            $player->getXuid(),
+            $player->getName(),
+            ClosureWrapper::combine(fn (array $result) => $callback((float)"$result[amount].$result[decimals]")),
+            ClosureWrapper::combine(fn () => $callback($this->currency->defaultAmount))
         );
     }
 
     public function giveMoney(Player $player, float $amount, ?callable $callback = null): void
     {
         $decimals = (int)(explode('.', strval($amount))[1] ?? 0);
-        Await::f2c(
-            fn () => yield from $this->api->add($player->getXuid(), $player->getName(), (int)$amount, $decimals),
-            $callback,
-            fn () => $callback ? $callback(false) : null
+        $this->api->add(
+            $player->getXuid(),
+            $player->getName(),
+            (int)$amount,
+            $decimals,
+            ClosureWrapper::combine(fn () => $callback ? $callback(true) : null),
+            ClosureWrapper::combine(fn () => $callback ? $callback(false) : null)
         );
     }
 
     public function takeMoney(Player $player, float $amount, ?callable $callback = null): void
     {
         $decimals = (int)(explode('.', strval($amount))[1] ?? 0);
-        Await::f2c(
-            fn () => yield from $this->api->subtract($player->getXuid(), $player->getName(), (int)$amount, $decimals),
-            $callback,
-            fn () => $callback ? $callback(false) : null
+        $this->api->subtract(
+            $player->getXuid(),
+            $player->getName(),
+            (int)$amount,
+            $decimals,
+            ClosureWrapper::combine(fn () => $callback ? $callback(true) : null),
+            ClosureWrapper::combine(fn () => $callback ? $callback(false) : null)
         );
     }
 
     public function setMoney(Player $player, float $amount, ?callable $callback = null): void
     {
         $decimals = (int)(explode('.', strval($amount))[1] ?? 0);
-        Await::f2c(
-            fn () => yield from $this->api->set($player->getXuid(), $player->getName(), (int)$amount, $decimals),
-            $callback,
-            fn () => $callback ? $callback(false) : null
+        $this->api->set(
+            $player->getXuid(),
+            $player->getName(),
+            (int)$amount,
+            $decimals,
+            ClosureWrapper::combine(fn () => $callback ? $callback(true) : null),
+            ClosureWrapper::combine(fn () => $callback ? $callback(false) : null)
         );
     }
 }
