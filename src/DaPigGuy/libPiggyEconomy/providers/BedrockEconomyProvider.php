@@ -39,7 +39,7 @@ class BedrockEconomyProvider extends EconomyProvider
             $player->getXuid(),
             $player->getName(),
             fn (array $result) => $callback((float)"$result[amount].$result[decimals]"),
-            fn () =>  $callback($this->currency->defaultAmount)
+            fn () => $callback((float)"{$this->currency->defaultAmount}.{$this->currency->defaultDecimals}")
         );
     }
 
