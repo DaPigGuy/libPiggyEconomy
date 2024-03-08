@@ -7,7 +7,6 @@ namespace DaPigGuy\libPiggyEconomy\providers;
 use cooldogedev\BedrockEconomy\api\type\ClosureAPI;
 use cooldogedev\BedrockEconomy\BedrockEconomy;
 use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
-use cooldogedev\BedrockEconomy\api\util\ClosureWrapper;
 use cooldogedev\BedrockEconomy\currency\Currency;
 use pocketmine\player\Player;
 use pocketmine\Server;
@@ -39,8 +38,8 @@ class BedrockEconomyProvider extends EconomyProvider
         $this->api->get(
             $player->getXuid(),
             $player->getName(),
-            ClosureWrapper::combine(fn (array $result) => $callback((float)"$result[amount].$result[decimals]")),
-            ClosureWrapper::combine(fn () => $callback($this->currency->defaultAmount))
+            fn (array $result) => $callback((float)"$result[amount].$result[decimals]"),
+            fn () =>  $callback($this->currency->defaultAmount)
         );
     }
 
@@ -52,8 +51,8 @@ class BedrockEconomyProvider extends EconomyProvider
             $player->getName(),
             (int)$amount,
             $decimals,
-            ClosureWrapper::combine(fn () => $callback ? $callback(true) : null),
-            ClosureWrapper::combine(fn () => $callback ? $callback(false) : null)
+            fn () => $callback ? $callback(true) : null,
+            fn () => $callback ? $callback(false) : null
         );
     }
 
@@ -65,8 +64,8 @@ class BedrockEconomyProvider extends EconomyProvider
             $player->getName(),
             (int)$amount,
             $decimals,
-            ClosureWrapper::combine(fn () => $callback ? $callback(true) : null),
-            ClosureWrapper::combine(fn () => $callback ? $callback(false) : null)
+            fn () => $callback ? $callback(true) : null,
+            fn () => $callback ? $callback(false) : null
         );
     }
 
@@ -78,8 +77,8 @@ class BedrockEconomyProvider extends EconomyProvider
             $player->getName(),
             (int)$amount,
             $decimals,
-            ClosureWrapper::combine(fn () => $callback ? $callback(true) : null),
-            ClosureWrapper::combine(fn () => $callback ? $callback(false) : null)
+            fn () => $callback ? $callback(true) : null,
+            fn () => $callback ? $callback(false) : null
         );
     }
 }
