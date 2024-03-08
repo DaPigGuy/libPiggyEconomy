@@ -8,6 +8,7 @@ use cooldogedev\BedrockEconomy\api\type\ClosureAPI;
 use cooldogedev\BedrockEconomy\BedrockEconomy;
 use cooldogedev\BedrockEconomy\api\BedrockEconomyAPI;
 use cooldogedev\BedrockEconomy\currency\Currency;
+use cooldogedev\BedrockEconomy\database\cache\GlobalCache;
 use pocketmine\player\Player;
 use pocketmine\Server;
 
@@ -35,12 +36,8 @@ class BedrockEconomyProvider extends EconomyProvider
 
     public function getMoney(Player $player, callable $callback): void
     {
-        $this->api->get(
-            $player->getXuid(),
-            $player->getName(),
-            fn (array $result) => $callback((float)"$result[amount].$result[decimals]"),
-            fn () => $callback((float)"{$this->currency->defaultAmount}.{$this->currency->defaultDecimals}")
-        );
+        $entry = GlobalCache::ONLINE()->get($player->getName());
+        $callback($entry ? (float)"{$entry->amount}.{$entry->decimals}" : (float)"{$this->currency->defaultAmount}.{$this->currency->defaultDecimals}");
     }
 
     public function giveMoney(Player $player, float $amount, ?callable $callback = null): void
