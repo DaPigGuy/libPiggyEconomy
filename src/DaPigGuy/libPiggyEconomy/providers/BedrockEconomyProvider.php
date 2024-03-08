@@ -19,7 +19,8 @@ class BedrockEconomyProvider extends EconomyProvider
 
     public static function checkDependencies(): bool
     {
-        return Server::getInstance()->getPluginManager()->getPlugin("BedrockEconomy") !== null;
+        $plugin = Server::getInstance()->getPluginManager()->getPlugin("BedrockEconomy");
+        return $plugin !== null && version_compare($plugin->getDescription()->getVersion(), '4.0', '>=');
     }
 
     public function __construct()
