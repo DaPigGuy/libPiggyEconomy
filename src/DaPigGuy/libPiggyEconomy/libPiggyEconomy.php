@@ -9,6 +9,7 @@ use DaPigGuy\libPiggyEconomy\exceptions\UnknownProviderException;
 use DaPigGuy\libPiggyEconomy\providers\BedrockEconomyProvider;
 use DaPigGuy\libPiggyEconomy\providers\EconomyProvider;
 use DaPigGuy\libPiggyEconomy\providers\EconomySProvider;
+use DaPigGuy\libPiggyEconomy\providers\SimpleEconomyProvider;
 use DaPigGuy\libPiggyEconomy\providers\XPProvider;
 
 class libPiggyEconomy
@@ -28,6 +29,7 @@ class libPiggyEconomy
 
             self::registerProvider(["economys", "economyapi"], EconomySProvider::class);
             self::registerProvider(["bedrockeconomy"], BedrockEconomyProvider::class);
+            self::registerProvider(["simpleeconomy"], SimpleEconomyProvider::class);
             self::registerProvider(["xp", "exp", "experience"], XPProvider::class);
         }
     }
